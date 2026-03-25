@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Georgy Varghese — EHS Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f0e;
+    --surface: #141816;
+    --surface2: #1c201e;
+    --border: #2a2f2c;
+    --accent: #00e07a;
+    --accent-dim: #00803f;
+    --amber: #f5a623;
+    --red: #e04040;
+    --text: #d4dbd6;
+    --muted: #6b7a70;
+    --white: #f0f5f1;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE EFFECT */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,15,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 3rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+  }
+
+  .hero-left {
+    padding: 8rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(4rem, 7vw, 7rem);
+    font-weight: 800;
+    line-height: 0.9;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-summary {
+    font-size: 1rem;
+    color: var(--text);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .btn-primary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .btn-outline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    text-decoration: none;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-outline:hover { background: rgba(0,224,122,0.08); transform: translateY(-1px); }
+
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    padding: 8rem 3rem 4rem;
+    opacity: 0;
+    animation: fadeIn 1.2s 0.5s forwards;
+  }
+
+  .stats-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+
+  .stats-panel::before {
+    content: 'SAFETY METRICS';
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    position: absolute;
+    top: -0.5rem;
+    left: 2rem;
+    background: var(--surface);
+    padding: 0 0.5rem;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat-row:last-child { border-bottom: none; }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .stat-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-value.amber { color: var(--amber); }
+  .stat-value.red { color: var(--red); }
+
+  .stat-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.15rem;
+  }
+
+  .stat-right { text-align: right; }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    animation: scanline 2s 1.5s infinite;
+  }
+
+  @keyframes scanline {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 0;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* COMPETENCIES */
+  .competencies { background: var(--surface); }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .comp-card {
+    background: var(--surface);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+
+  .comp-card:hover { background: var(--surface2); }
+
+  .comp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.3s;
+  }
+
+  .comp-card:hover::before { height: 100%; }
+
+  .comp-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .comp-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .comp-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* EXPERIENCE */
+  .experience { background: var(--bg); }
+
+  .exp-timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .exp-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .exp-item {
+    position: relative;
+    padding: 0 0 4rem 3rem;
+  }
+
+  .exp-item:last-child { padding-bottom: 0; }
+
+  .exp-dot {
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 10px; height: 10px;
+    border: 1px solid var(--accent);
+    background: var(--bg);
+    transform: rotate(45deg);
+  }
+
+  .exp-period {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .exp-period::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 40px;
+    background: var(--accent-dim);
+  }
+
+  .exp-role {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-company {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-location {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .exp-project {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--amber);
+    background: rgba(245,166,35,0.08);
+    border: 1px solid rgba(245,166,35,0.2);
+    padding: 0.3rem 0.8rem;
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.92rem;
+    color: var(--text);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .exp-highlight {
+    display: inline-flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .highlight-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(0,224,122,0.08);
+    border: 1px solid rgba(0,224,122,0.2);
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  /* SKILLS */
+  .skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .skill-category {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+  }
+
+  .skill-cat-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .skill-cat-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .skill-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.35rem 0.9rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: border-color 0.2s, color 0.2s;
+    cursor: default;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* EDUCATION & CERTS */
+  .education { background: var(--bg); }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .edu-card:hover { border-color: var(--accent-dim); }
+
+  .edu-degree {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+
+  .edu-school {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-period {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--text);
+    padding: 0.75rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+
+  .cert-item:hover { border-color: var(--accent-dim); }
+
+  .cert-bullet {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  .contact { background: var(--surface); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-intro {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-intro span { color: var(--accent); }
+
+  .contact-text {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent-dim);
+    background: rgba(0,224,122,0.05);
+  }
+
+  .contact-link-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+  }
+
+  .contact-link-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.1rem;
+  }
+
+  .contact-link-value {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .availability-box {
+    background: var(--bg);
+    border: 1px solid var(--accent-dim);
+    padding: 2rem;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  .avail-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .avail-status {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .avail-detail {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .lang-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .lang-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lang-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    min-width: 80px;
+  }
+
+  .lang-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lang-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  .lang-level {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    min-width: 70px;
+    text-align: right;
+    letter-spacing: 0.05em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-brand strong { color: var(--accent); }
+
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 7rem 2rem 4rem; }
+    .container { padding: 0 1.5rem; }
+    .skills-grid,
+    .edu-grid,
+    .contact-grid { grid-template-columns: 1fr; }
+    .scroll-hint { left: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">GV.EHS</a>
+  <ul class="nav-links">
+    <li><a href="#competencies">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    Open to opportunities
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-left">
+    <p class="hero-tag">EHS Engineer · Process Safety · ATEX</p>
+    <h1 class="hero-name">Georgy<span>Varghese</span></h1>
+    <p class="hero-title">Process Safety &amp; Major Hazard Control</p>
+    <p class="hero-summary">
+      EHS Engineer with 7+ years of experience managing safety governance across high-consequence industrial environments — from ATEX-classified rocket propellant plants to global aerospace composite manufacturing. Based in Paris, France.
+    </p>
+    <div class="hero-ctas">
+      <a href="#experience" class="btn-primary">View Experience</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stats-panel">
+      <div class="stat-row">
+        <div>
+          <div class="stat-label">YEARS EXPERIENCE</div>
+        </div>
+        <div class="stat-right">
+          <div class="stat-value">7+</div>
+          <div class="stat-sub">Cross-sector</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div>
+          <div class="stat-label">RISK REDUCTION</div>
+        </div>
+        <div class="stat-right">
+          <div class="stat-value">30%</div>
+          <div class="stat-sub">Operational exposure</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div>
+          <div class="stat-label">NEAR-MISS INCIDENTS</div>
+        </div>
+        <div class="stat-right">
+          <div class="stat-value red">↓98%</div>
+          <div class="stat-sub">Via BBS programs</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div>
+          <div class="stat-label">EQUIPMENT RELIABILITY</div>
+        </div>
+        <div class="stat-right">
+          <div class="stat-value amber">+25%</div>
+          <div class="stat-sub">Uptime improvement</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div>
+          <div class="stat-label">GLOBAL SITES MONITORED</div>
+        </div>
+        <div class="stat-right">
+          <div class="stat-value">150+</div>
+          <div class="stat-sub">L'Oréal network</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-line"></span>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- COMPETENCIES -->
+<section class="competencies" id="competencies">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">01</span>
+      <h2 class="section-title">Core Competencies</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-icon">⚠️</div>
+        <div class="comp-name">Process Safety &amp; Major Hazard</div>
+        <div class="comp-desc">HAZOP, PHA, BLEVE &amp; gas leak analysis across energetic material and aerospace environments.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">⚡</div>
+        <div class="comp-name">ATEX &amp; Hazardous Areas</div>
+        <div class="comp-desc">Hazardous area classification, ignition control, equipment suitability for explosive atmospheres.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">🔒</div>
+        <div class="comp-name">PTW · LOTO · Machine Safety</div>
+        <div class="comp-desc">Permit-to-work systems, lockout/tagout, and machine safeguarding across regulated facilities.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">📋</div>
+        <div class="comp-name">ISO 45001 / 14001 / 9001</div>
+        <div class="comp-desc">Full lifecycle compliance management with zero non-compliance findings across 12+ aerospace configurations.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">📊</div>
+        <div class="comp-name">EHS Data Analytics</div>
+        <div class="comp-desc">Microsoft Power BI dashboards, leading &amp; lagging indicator monitoring across global industrial networks.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">🔍</div>
+        <div class="comp-name">Incident Investigation &amp; RCA</div>
+        <div class="comp-desc">Root cause analysis, corrective action implementation, and behaviour-based safety program leadership.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">🔥</div>
+        <div class="comp-name">Fire Protection Systems</div>
+        <div class="comp-desc">Emergency preparedness, fire fighting training, chemical spill and biohazard response planning.</div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">🌍</div>
+        <div class="comp-name">Multi-Sector Experience</div>
+        <div class="comp-desc">Aerospace &amp; Defence, Oil &amp; Gas, Pharmaceutical/Life Sciences, Automotive Manufacturing.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">02</span>
+      <h2 class="section-title">Professional Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="exp-timeline">
+
+      <!-- L'Oréal -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-period">Jul 2025 — Dec 2025</div>
+        <div class="exp-role">Corporate Health &amp; Safety Intern</div>
+        <div class="exp-company">L'Oréal</div>
+        <div class="exp-location">📍 Paris, France &nbsp;·&nbsp; EHS Data &amp; Governance</div>
+        <ul class="exp-bullets">
+          <li>Monitored and validated leading and lagging EHS indicators across 150+ Plants, R&amp;I centres, Distribution Centres, and Stores globally, identifying trends before escalation.</li>
+          <li>Administered LIM and GRAAL EHS platforms, standardising global incident reporting and reducing data inconsistencies across the network.</li>
+          <li>Conducted risk analysis on AGV and robotic arm (ARM) operations, benchmarking safety impact to support strategic automation investment decisions.</li>
+          <li>Collaborated with site EHS teams across multiple geographies to drive data quality, incident management, and proactive risk identification.</li>
+        </ul>
+        <div class="exp-highlight">
+          <span class="highlight-tag">EHS Analytics</span>
+          <span class="highlight-tag">Power BI</span>
+          <span class="highlight-tag">Global Governance</span>
+          <span class="highlight-tag">AGV Safety</span>
+        </div>
+      </div>
+
+      <!-- ISRO Aerospace -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-period">Jan 2023 — Sep 2024</div>
+        <div class="exp-role">Safety Engineer &amp; Production Lead</div>
+        <div class="exp-company">Hydro Pneumatic Engineers (Hyd) Pvt. Ltd.</div>
+        <div class="exp-location">📍 Thiruvananthapuram, India &nbsp;·&nbsp; Aerospace Composite Manufacturing</div>
+        <span class="exp-project">▸ Project: ISRO — GOCO Model</span>
+        <ul class="exp-bullets">
+          <li>Integrated safety controls across composite tube manufacturing — chemical resin handling, curing, trimming, and finishing for solid propellant motor applications.</li>
+          <li>Implemented PTW, LOTO, machine safeguarding, and fire protection controls in a high-risk aerospace manufacturing environment.</li>
+          <li>Delivered ISO 9001 / 14001 / 45001 compliance across 12 aerospace configurations with zero non-compliance findings.</li>
+          <li>Led HAZOP workshops and operational risk reviews addressing material handling and process deviations.</li>
+          <li>Reduced operational risk exposure by 30% and improved equipment uptime by 20% through safety–maintenance integration.</li>
+        </ul>
+        <div class="exp-highlight">
+          <span class="highlight-tag">HAZOP</span>
+          <span class="highlight-tag">ISO 45001</span>
+          <span class="highlight-tag">Composite Mfg</span>
+          <span class="highlight-tag">ISRO</span>
+          <span class="highlight-tag">30% Risk Reduction</span>
+        </div>
+      </div>
+
+      <!-- ISRO Propellant -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-period">Feb 2020 — Nov 2022</div>
+        <div class="exp-role">HSE Engineer — Rocket Propellant Plant</div>
+        <div class="exp-company">Hydro Pneumatic Engineers (Hyd) Pvt. Ltd.</div>
+        <div class="exp-location">📍 Trivandrum, India &nbsp;·&nbsp; ATEX Environment</div>
+        <span class="exp-project">▸ Project: ISRO — GOCO Model</span>
+        <ul class="exp-bullets">
+          <li>Implemented structured risk control systems (PTW, LOTO, preventive maintenance) across formal hazardous area classification for energetic material production.</li>
+          <li>Reinforced ignition control measures and equipment suitability within ATEX-classified zones; oversaw fire protection and emergency preparedness.</li>
+          <li>Directed controlled propellant waste management and incineration in compliance with environmental and safety standards.</li>
+          <li>Improved operational reliability by 25% through safety–maintenance integration.</li>
+          <li>Maintained ISO 45001 compliance within a major hazard production environment.</li>
+        </ul>
+        <div class="exp-highlight">
+          <span class="highlight-tag">ATEX</span>
+          <span class="highlight-tag">Rocket Propellant</span>
+          <span class="highlight-tag">Major Hazard</span>
+          <span class="highlight-tag">25% Reliability ↑</span>
+        </div>
+      </div>
+
+      <!-- Olive Lifesciences -->
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-period">Jul 2017 — Nov 2019</div>
+        <div class="exp-role">EHS Supervisor</div>
+        <div class="exp-company">Olive Lifesciences Pvt. Ltd.</div>
+        <div class="exp-location">📍 Bengaluru, India &nbsp;·&nbsp; Pharmaceutical Manufacturing</div>
+        <ul class="exp-bullets">
+          <li>Led PHA and HAZOP studies; enforced LOTO, machine guarding, and confined space entry protocols across pharmaceutical manufacturing operations.</li>
+          <li>Achieved 98% reduction in near-miss incidents through proactive hazard management and behaviour-based safety (BBS) programs.</li>
+          <li>Directed hazardous waste management and reduced environmental impact through waste minimisation and emissions monitoring (ETP, RO water systems).</li>
+          <li>Ensured regulatory compliance with OSHA 1910.119, NFPA, GMP, EPA, ISO 45001, ISO 9001, and ISO 14001.</li>
+          <li>Conducted toolbox talks, mock drills (chemical spills, fire emergencies), and safety audits.</li>
+        </ul>
+        <div class="exp-highlight">
+          <span class="highlight-tag">PHA</span>
+          <span class="highlight-tag">Pharma GMP</span>
+          <span class="highlight-tag">BBS</span>
+          <span class="highlight-tag">OSHA</span>
+          <span class="highlight-tag">98% Near-Miss Reduction</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">03</span>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-cat-title">Safety Systems</div>
+        <div class="skill-tags">
+          <span class="skill-tag">HAZOP</span>
+          <span class="skill-tag">PHA</span>
+          <span class="skill-tag">ATEX</span>
+          <span class="skill-tag">PTW</span>
+          <span class="skill-tag">LOTO</span>
+          <span class="skill-tag">BLEVE Analysis</span>
+          <span class="skill-tag">Gas Leak Analysis</span>
+          <span class="skill-tag">Fire Protection</span>
+          <span class="skill-tag">Machine Guarding</span>
+          <span class="skill-tag">Confined Space</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Standards &amp; Compliance</div>
+        <div class="skill-tags">
+          <span class="skill-tag">ISO 45001</span>
+          <span class="skill-tag">ISO 14001</span>
+          <span class="skill-tag">ISO 9001</span>
+          <span class="skill-tag">OSHA 1910.119</span>
+          <span class="skill-tag">NFPA</span>
+          <span class="skill-tag">GMP</span>
+          <span class="skill-tag">EPA</span>
+          <span class="skill-tag">NEBOSH IGC</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Data &amp; Analytics</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft Power BI</span>
+          <span class="skill-tag">EHS Data Analytics</span>
+          <span class="skill-tag">LIM Platform</span>
+          <span class="skill-tag">GRAAL Platform</span>
+          <span class="skill-tag">Incident Reporting</span>
+          <span class="skill-tag">KPI Monitoring</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Sectors</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Aerospace &amp; Defence</span>
+          <span class="skill-tag">Oil &amp; Gas</span>
+          <span class="skill-tag">Pharmaceutical</span>
+          <span class="skill-tag">Automotive</span>
+          <span class="skill-tag">FMCG / Cosmetics</span>
+          <span class="skill-tag">Space</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education" id="education">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">04</span>
+      <h2 class="section-title">Education &amp; Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="edu-grid">
+      <div>
+        <div style="display:flex;flex-direction:column;gap:1.5rem;margin-bottom:2rem;">
+          <div class="edu-card">
+            <div class="edu-degree">Mastère Spécialisé — Safety Engineering &amp; Management</div>
+            <div class="edu-school">INSA Toulouse</div>
+            <div class="edu-period">Sep 2024 — 2025 &nbsp;·&nbsp; Toulouse, France</div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-degree">B.Tech — Fire Technology &amp; Safety Engineering</div>
+            <div class="edu-school">Noorul Islam University</div>
+            <div class="edu-period">Apr 2013 — Mar 2017</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.25rem;">Certifications &amp; Training</div>
+        <div class="cert-list">
+          <div class="cert-item"><span class="cert-bullet">◆</span>NEBOSH International General Certificate — Occupational Health &amp; Safety</div>
+          <div class="cert-item"><span class="cert-bullet">◆</span>Human Factors and Safety Culture Training</div>
+          <div class="cert-item"><span class="cert-bullet">◆</span>Fire Fighting and Emergency Response Training</div>
+          <div class="cert-item"><span class="cert-bullet">◆</span>Microsoft Power BI</div>
+          <div class="cert-item"><span class="cert-bullet">◆</span>AI Fluency: Framework &amp; Foundations</div>
+          <div class="cert-item"><span class="cert-bullet">◆</span>Critical Thinking (CPE) &amp; SWOT Analysis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">05</span>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-intro">Let's build safer<span> environments</span> together.</div>
+        <p class="contact-text">
+          Available for EHS Engineer, Process Safety, and Major Hazard roles across Europe. Eligible to work in France (APS) and open to relocation.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:varghese@insa-toulouse.fr" class="contact-link">
+            <span class="contact-link-icon">✉</span>
+            <div>
+              <span class="contact-link-label">Email</span>
+              <span class="contact-link-value">varghese@insa-toulouse.fr</span>
+            </div>
+          </a>
+          <a href="tel:+33780720050" class="contact-link">
+            <span class="contact-link-icon">☎</span>
+            <div>
+              <span class="contact-link-label">Phone</span>
+              <span class="contact-link-value">+33 7 80 72 00 50</span>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/georgy-varghese-g/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">in</span>
+            <div>
+              <span class="contact-link-label">LinkedIn</span>
+              <span class="contact-link-value">linkedin.com/in/georgy-varghese-g</span>
+            </div>
+          </a>
+          <a href="#" class="contact-link">
+            <span class="contact-link-icon">📍</span>
+            <div>
+              <span class="contact-link-label">Location</span>
+              <span class="contact-link-value">Paris, France — Open to relocation across Europe</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="availability-box">
+          <div class="avail-label"><span class="status-dot"></span> Availability Status</div>
+          <div class="avail-status">Open to Opportunities</div>
+          <div class="avail-detail">
+            Currently completing Mastère Spécialisé at INSA Toulouse. Eligible to work in France under APS. Actively seeking EHS, Process Safety, or Major Hazard roles.
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">Language Proficiency</div>
+          <div class="lang-row">
+            <div class="lang-item">
+              <span class="lang-name">English</span>
+              <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+              <span class="lang-level">Fluent</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">French</span>
+              <div class="lang-bar"><div class="lang-fill" style="width:60%"></div></div>
+              <span class="lang-level">Intermediate</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">German</span>
+              <div class="lang-bar"><div class="lang-fill" style="width:20%"></div></div>
+              <span class="lang-level">Basic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <strong>Georgy Varghese</strong> · EHS Engineer · Paris, France
+  </div>
+  <div class="footer-right">
+    Process Safety · Major Hazard · ATEX · ISO 45001
+  </div>
+</footer>
+
+<script>
+  // Intersection observer for fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.comp-card, .exp-item, .skill-category, .edu-card, .cert-item, .contact-link').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
